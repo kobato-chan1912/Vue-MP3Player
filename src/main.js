@@ -1,6 +1,7 @@
 import Vue from 'vue/dist/vue.js'
 import App from './App.vue'
 import APlayer from '@moefe/vue-aplayer';
+import router from './router'
 
 
 
@@ -12,5 +13,6 @@ Vue.config.productionTip = false;
 new Vue({
   el: '#app',
   components: { App },
-  template: '<App/>',
+  router,
+  template: '<App/>'
 });
