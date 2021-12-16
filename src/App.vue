@@ -1,32 +1,99 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <router-view>
+      
+    </router-view>
+    
+
+    <div
+      class="
+        aplayer
+        aplayer-withlist
+        aplayer-narrow
+        aplayer-fixed
+        aplayer-arrow
+        aplayer-loading
+      "
+    >
+      <div class="aplayer-lrc">
+        <div
+          class="aplayer-lrc-contents"
+          style="
+            transition-duration: 0ms;
+            transform: translate3d(0px, 0px, 0px);
+          "
+        >
+          <p class="aplayer-lrc-current">(,,•́ . •̀,,) 抱歉，当前歌曲暂无歌词</p>
+        </div>
+      </div>
     </div>
-    <router-view/>
   </div>
 </template>
 
+<script>
+import evanyou from "docute-evanyou";
+
+export default {
+  name: "App",
+  created() {
+    "use strict";
+    evanyou()({
+      router: {
+        afterEach: function (e) {
+          return e({ meta: { name: "landing" } });
+        },
+      },
+    });
+  },
+};
+</script>
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+
+h2,
+h3 {
+  font-family: "Roboto";
+  font-weight: 400;
+  letter-spacing: 1px;
   text-align: center;
-  color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
+.landing > * {
+  opacity: 0.8;
+}
+.landing {
+  position: relative;
+  z-index: 1;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  user-select: none;
+}
+body {
+  font: Roboto;
+}
+h2 {
+  margin: 0;
+  margin-top: -50px;
+  font-size: 40px;
+  text-transform: uppercase;
+}
+h3 {
+  margin-top: 20px;
+}
+.aplayer-wrap {
+  width: 600px;
+  max-width: 100%;
+  margin: 20px 0 40px;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+#app,
+body,
+html {
+  height: 100%;
+  overflow: hidden;
 }
 </style>
