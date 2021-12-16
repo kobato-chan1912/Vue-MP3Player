@@ -1,8 +1,16 @@
-import Vue from 'vue'
+import Vue from 'vue/dist/vue.js'
 import App from './App.vue'
+import APlayer from '@moefe/vue-aplayer';
 
-Vue.config.productionTip = false
 
+
+Vue.use(APlayer);
+
+Vue.config.productionTip = false;
+
+/* eslint-disable no-new */
 new Vue({
-  render: h => h(App),
-}).$mount('#app')
+  el: '#app',
+  components: { App },
+  template: '<App/>',
+});
