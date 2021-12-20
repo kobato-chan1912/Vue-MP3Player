@@ -20,7 +20,6 @@ export default {
     };
   },
   created() {
-    
     axios
       .get(
         `${process.env.VUE_APP_API}/playlists/${this.$route.params.id}/songs`,
@@ -34,37 +33,50 @@ export default {
         let res = error.response;
         if (res.status === 403) {
           this.$swal({
-      title: "Nhập mật khẩu của Playlist",
-      input: "password",
-      inputAttributes: {
-        autocapitalize: "off"
-      },
-      showCancelButton: true,
-      confirmButtonText: "Look up",
-      showLoaderOnConfirm: true,
-      preConfirm: (login) => {
-        return fetch(`//api.github.com/users/${login}`)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(response.statusText);
+            title: "Nhập mật khẩu của Playlist",
+            input: "password",
+            inputAttributes: {
+              autocapitalize: "off",
+            },
+            showCancelButton: true,
+            confirmButtonText: "Vào nghe",
+            showLoaderOnConfirm: true,
+            preConfirm: (passwordInput) => {
+              let formData = new FormData();
+              formData.append("password", passwordInput);
+
+              return fetch(
+                `${process.env.VUE_APP_API}/playlists/${this.$route.params.id}/songs`,
+                {
+                  method: "post",
+                  body: formData,
+                }
+              )
+                .then((response) => {
+                  if (!response.ok) {
+                    throw new Error(response.statusText);
+                  }
+                  return response.json();
+                })
+                .catch((error) => {
+                  this.$swal.showValidationMessage(
+                    `${error}: Kiểm tra lại mật khẩu`
+                  );
+                });
+            },
+            allowOutsideClick: () => !this.$swal.isLoading(),
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.audio = result.value.songs;
+              this.$swal.fire(
+                "Thành công!",
+                "Tận hưởng âm nhạc nào!",
+                "success"
+              );
             }
-            return response.json();
-          })
-          .catch((error) => {
-            this.$swal.showValidationMessage(`Request failed: ${error}`);
           });
-      },
-      allowOutsideClick: () => !this.$swal.isLoading(),
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.$swal.fire({
-          title: `${result.value.login}'s avatar`,
-          imageUrl: result.value.avatar_url,
-        });
-      }
-    });
         } else {
-          window.location.href = '/404';
+          window.location.href = "/404";
         }
       });
   },
