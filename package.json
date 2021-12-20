@@ -5,14 +5,17 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "dev": "vue-cli-service build --mode development"
   },
   "dependencies": {
     "@moefe/vue-aplayer": "^2.0.0-beta.5",
+    "axios": "^0.24.0",
     "core-js": "^3.6.5",
     "docute-evanyou": "^0.5.0",
     "vue": "^2.6.11",
-    "vue-router": "^3.2.0"
+    "vue-router": "^3.2.0",
+    "vue-sweetalert2": "^5.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

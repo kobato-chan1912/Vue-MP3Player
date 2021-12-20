@@ -5,6 +5,7 @@ import VueRouter from 'vue-router';
 import home from './components/home.vue';
 import playlist from './components/playlist.vue';
 import notfound from './components/404.vue';
+require('dotenv').config()
 
 Vue.use(APlayer);
 Vue.use(VueRouter);
