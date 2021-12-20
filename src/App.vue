@@ -37,6 +37,7 @@ export default {
   name: "App",
   created() {
     "use strict";
+
     evanyou()({
       router: {
         afterEach: function (e) {
@@ -73,13 +74,12 @@ h3 {
   user-select: none;
 }
 body {
-  font: Roboto;
+  font: Roboto !important;
 }
 h2 {
   margin: 0;
   margin-top: -50px;
   font-size: 40px;
-  text-transform: uppercase;
 }
 h3 {
   margin-top: 20px;

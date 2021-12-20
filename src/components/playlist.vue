@@ -1,9 +1,9 @@
 <template>
-  <div class="landing">
-    <h2>SWORD ART ONLINE</h2>
-    <h3 style="color: #999">🍰 Beautiful and clean VueJS Player 🍰</h3>
+  <div class="landing" style="display: none">
+    <h2>{{ playlistName }}</h2>
+    <h3 style="color: #999">🍰 {{ playlistDescription }} 🍰</h3>
 
-    <div class="aplayer-wrap">
+    <div class="aplayer-wrap" id="player">
       <aplayer :audio="audio" :lrcType="3" />
     </div>
   </div>
@@ -17,6 +17,8 @@ export default {
   data() {
     return {
       audio: [],
+      playlistName: "",
+      playlistDescription: "",
     };
   },
   created() {
@@ -28,10 +30,15 @@ export default {
       .then((response) => {
         console.log(response.data.songs);
         this.audio = response.data.songs;
+        this.playlistName = response.data.name_playlist;
+        this.playlistDescription = response.data.description;
+
+        document.querySelector(".landing").style.display = "";
       })
       .catch((error) => {
         let res = error.response;
         if (res.status === 403) {
+          document.getElementById("player").style.display = "block";
           this.$swal({
             title: "Nhập mật khẩu của Playlist",
             input: "password",
@@ -68,11 +75,16 @@ export default {
           }).then((result) => {
             if (result.isConfirmed) {
               this.audio = result.value.songs;
+              this.playlistName = result.value.name_playlist;
+              this.playlistDescription = result.value.description;
+              document.querySelector(".landing").style.display = "";
               this.$swal.fire(
                 "Thành công!",
                 "Tận hưởng âm nhạc nào!",
                 "success"
               );
+            } else {
+              window.location.href = "/404";
             }
           });
         } else {
